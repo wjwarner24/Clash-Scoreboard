@@ -11,7 +11,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const Player = require('./models/Player')
+const Player = require('./models/Player');
 const RoyaleAPI = require("royale-api");
 
 var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0OTg2OTMyLTc4ZGMtNDk1ZC05MmNmLWI3OWUxYjY4NWY5NyIsImlhdCI6MTcxMjAzNjU1Nywic3ViIjoiZGV2ZWxvcGVyLzc2NWY2N2U5LTZiZDctYTJiNC1kZTI4LWU4OGNlZWE1MzIxZSIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyI2Ny4xNjYuNTQuMzIiXSwidHlwZSI6ImNsaWVudCJ9XX0.JCCwwbbrEkiKyEDWHofaHfonl86NQXhjOITKhbwVBWqDo36unTzOSu4ktR86hA9P6n7t9qlF2suYNCdGFqFC5w";
@@ -27,12 +27,13 @@ app.use(express.json());
 mongoose.connect(db_path, {}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
 
 const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
 
-// POST a new player
+// POST a new player with an id
 app.post('/player/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -55,7 +56,7 @@ app.post('/player/:id', async (req, res) => {
 });
 
 
-// GETs all players
+// GET all players
 app.get('/players', async (req, res) => {
     try {
         const players = await Player.find({}); // Fetches all players from the database
@@ -78,7 +79,7 @@ app.delete('/players', async (req, res) => {
     }
 });
 
-// GETs a player by id
+// GET a player by id
 app.get('/player/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -93,7 +94,7 @@ app.get('/player/:id', async (req, res) => {
     }
 });
 
-// GETs a players clanmates
+// GET a players clanmates
 app.get('/player/:id/clanmates', async (req, res) => {
     const { id } = req.params;
     try {
@@ -126,7 +127,7 @@ app.put('/player/:id', async (req, res) => {
     }
 });
 
-// add opp tag to a player's saved tags
+// PUT to add opp to a player's saved tags
 app.put('/player/:id/add-opp/:tag', async (req, res) => {
     const { id, tag } = req.params;
     try {
@@ -149,7 +150,7 @@ app.put('/player/:id/add-opp/:tag', async (req, res) => {
     }
 });
 
-// Deletes a player given the id
+// DELETE a player given the id
 app.delete('/player/:id', async (req, res) => {
     const { id } = req.params; // Get the ID from the URL parameters
     try {
@@ -164,7 +165,7 @@ app.delete('/player/:id', async (req, res) => {
     }
 });
 
-// remove a tag from saved tags
+// PUT to remove an opp from saved opps
 app.put('/player/:id/remove-opp/:tag', async (req, res) => {
     const { id, tag } = req.params;
     try {
