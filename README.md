@@ -5,7 +5,7 @@ It will not work when you try to run it because the API key I use for Clash Roya
 
 I tested it with Postman and all the routes seem to be working, there are probably some bugs somewhere though:
 
-POST /player/:id
+POST /player/:id<br>
   -adds a new player with the given id and adds all their battles
 GET /players
   -gets all players
