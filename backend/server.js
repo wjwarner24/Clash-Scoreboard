@@ -187,6 +187,64 @@ app.put('/player/:id/remove-opp/:tag', async (req, res) => {
     }
 });
 
+// GET the scores for a player
+app.get('/player/:id/scores', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const player = await Player.findById(id);
+        if (player) {
+            let enemies = await get_clanmates(id);
+            for (const opp of player.opps) {
+                if (!enemies.includes(opp)) {
+                    enemies.push(opp);
+                }
+            }
+
+            let scores_map = new Map();
+            for (const enemy of enemies) {
+                let name = await get_name(enemy);
+                let score = {
+                    name: name,
+                    wins: 0,
+                    losses: 0,
+                    ties: 0,
+                };
+                scores_map.set(enemy, score);
+            }
+            for (const battle of player.battles) { 
+                for (const opp of battle.opponent) {
+                    let opp_name = opp.tag.substring(1);
+                    if (scores_map.has(opp_name)) {
+                        let result = await get_result(battle);
+                        let score = scores_map.get(opp_name);
+                        if (result === "win") {
+                            score.wins++;
+                        } else if (result === "lose") {
+                            score.losses++;
+                        } else {
+                            score.ties++;
+                        }
+                        scores_map.set(opp_name, score);
+                    }
+                }
+            }
+            scores_map.forEach((value, key) => {
+                if ((value.wins + value.losses + value.ties) == 0) {
+                    scores_map.delete(key);
+                }
+            });
+            let obj = Array.from(scores_map).map(([key, value]) => ({ id: key, ...value }));
+            res.status(200).json(obj);
+
+        } else {
+            res.status(404).send('Player not found');
+        }
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+
 
 // function to get a player's battles given an id
 async function get_battles(id) {
@@ -253,4 +311,29 @@ function get_num_members(members) {
         count++;
     }
     return count;
+}
+
+
+async function get_name(id) {
+    try {
+        const player = await cr.getPlayer('#' + id);
+        return player.data.name;
+    } catch (error) {
+        console.error("Failed to get name from id: ", error);
+        return null;
+    }
+}
+
+function get_result(battle) {
+    let my_crowns = battle.team[0].crowns;
+    let opp_crowns = battle.opponent[0].crowns;
+    if (my_crowns > opp_crowns) {
+        return "win";
+    }
+    else if (my_crowns < opp_crowns) {
+        return "lose";
+    }
+    else {
+        return "tie";
+    }
 }
