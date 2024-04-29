@@ -3,16 +3,17 @@
 // All routes seem to be working in PostMan
 // some example player tags for testing:
 
-// Me: 2LJ9R9LQ
-// Eli: 9RGGQQGO
-// Liam: 2JUYQUCPO
-// Noah: 802UCY2QQ
+// Me: #2LJ9R9LQ
+// Eli: #9RGGQQG0
+// Liam: #2JUYQUCP0
+// Noah: #802UCY2QQ
 
 
 const express = require('express');
 const mongoose = require('mongoose');
 const Player = require('./models/Player');
 const RoyaleAPI = require("royale-api");
+const cors = require('cors');
 
 var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0OTg2OTMyLTc4ZGMtNDk1ZC05MmNmLWI3OWUxYjY4NWY5NyIsImlhdCI6MTcxMjAzNjU1Nywic3ViIjoiZGV2ZWxvcGVyLzc2NWY2N2U5LTZiZDctYTJiNC1kZTI4LWU4OGNlZWE1MzIxZSIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyI2Ny4xNjYuNTQuMzIiXSwidHlwZSI6ImNsaWVudCJ9XX0.JCCwwbbrEkiKyEDWHofaHfonl86NQXhjOITKhbwVBWqDo36unTzOSu4ktR86hA9P6n7t9qlF2suYNCdGFqFC5w";
 var options = "";
@@ -23,6 +24,7 @@ const cr = new RoyaleAPI(token, options);
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 mongoose.connect(db_path, {}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
 
@@ -39,14 +41,21 @@ app.post('/player/:id', async (req, res) => {
     try {
         let player = await Player.findById(id);
         if (!player) {
-            const battles = await get_battles(id);
-            player = new Player({
-                _id: id,
-                opps: [],
-                battles: battles
-            });
-            await player.save();
-            res.status(201).send('Player created id: ' + id);
+            const name = await get_name(id);
+            if (name) {
+                const battles = await get_battles(id);
+                player = new Player({
+                    _id: id,
+                    name: name,
+                    opps: [],
+                    battles: battles
+                });
+                await player.save();
+                res.status(201).send('Player created id: ' + id);
+            }
+            else {
+                res.status(200).send('Invalid player tag');
+            }
         } else {
             res.status(200).send('Player already exists');
         }
@@ -233,7 +242,15 @@ app.get('/player/:id/scores', async (req, res) => {
                     scores_map.delete(key);
                 }
             });
-            let obj = Array.from(scores_map).map(([key, value]) => ({ id: key, ...value }));
+
+            let obj = {
+                name: player.name,
+                data: Array.from(scores_map).map(([key, value]) => ({
+                    id: key,
+                    ...value
+                }))
+            };
+
             res.status(200).json(obj);
 
         } else {
