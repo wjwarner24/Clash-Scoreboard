@@ -1,7 +1,9 @@
 
-import axios, * as others from 'axios';
+import axios from 'axios';
 const React = require('react');
-const { useEffect, useState } = React;
+const { useState } = React;
+
+const backend_path = "localhost:3000"
 
 function App() {
   const [id, setId] = useState('');
@@ -17,8 +19,8 @@ function App() {
     event.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`http://localhost:3000/player/${id}`);
-      const response = await axios.get(`http://localhost:3000/player/${id}/scores`);
+      await axios.post(`http://${backend_path}/player/${id}`);
+      const response = await axios.get(`http://${backend_path}/player/${id}/scores`);
       //console.log(response.data.data);
       setName(response.data.name);
       setScores(response.data.data);
@@ -33,8 +35,8 @@ function App() {
     event.preventDefault();
     setLoading(true);
     try {
-      await axios.put(`http://localhost:3000/player/${new_id}/add-opp/${new_tag}`);
-      const response = await axios.get(`http://localhost:3000/player/${new_id}/scores`);
+      await axios.put(`http://${backend_path}/player/${new_id}/add-opp/${new_tag}`);
+      const response = await axios.get(`http://${backend_path}/player/${new_id}/scores`);
       setScores(response.data.data);
     } catch (error) {
       console.error('Error adding opponent:', error);
@@ -46,8 +48,8 @@ function App() {
   const removeOpp = async (new_id, new_tag) => {
     setLoading(true);
     try {
-      await axios.put(`http://localhost:3000/player/${new_id}/remove-opp/${new_tag}`);
-      const response = await axios.get(`http://localhost:3000/player/${new_id}/scores`);
+      await axios.put(`http://${backend_path}/player/${new_id}/remove-opp/${new_tag}`);
+      const response = await axios.get(`http://${backend_path}/player/${new_id}/scores`);
       setScores(response.data.data);
     } catch (error) {
       console.error('Error removing opponent:', error);
@@ -58,7 +60,7 @@ function App() {
 
   return (
     <div>
-      <h1>Player Scores</h1>
+      <h1>Clash Royale Scoreboard</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -105,6 +107,3 @@ function App() {
 }
 
 export default App;
-
-
-

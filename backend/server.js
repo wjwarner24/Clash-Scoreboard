@@ -1,12 +1,13 @@
-
-
 // All routes seem to be working in PostMan
 // some example player tags for testing:
 
-// Me: #2LJ9R9LQ
-// Eli: #9RGGQQG0
-// Liam: #2JUYQUCP0
-// Noah: #802UCY2QQ
+// Me: 2LJ9R9LQ
+// Eli: 9RGGQQG0
+// Liam: 2JUYQUCP0
+// Noah: 802UCY2QQ
+// demonslime: Q98CV9UC
+// clashmaster: 29J0V9098
+// gaut: Y8OUJLCYV
 
 
 const express = require('express');
@@ -14,13 +15,11 @@ const mongoose = require('mongoose');
 const Player = require('./models/Player');
 const RoyaleAPI = require("royale-api");
 const cors = require('cors');
-
-var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImE0OTg2OTMyLTc4ZGMtNDk1ZC05MmNmLWI3OWUxYjY4NWY5NyIsImlhdCI6MTcxMjAzNjU1Nywic3ViIjoiZGV2ZWxvcGVyLzc2NWY2N2U5LTZiZDctYTJiNC1kZTI4LWU4OGNlZWE1MzIxZSIsInNjb3BlcyI6WyJyb3lhbGUiXSwibGltaXRzIjpbeyJ0aWVyIjoiZGV2ZWxvcGVyL3NpbHZlciIsInR5cGUiOiJ0aHJvdHRsaW5nIn0seyJjaWRycyI6WyI2Ny4xNjYuNTQuMzIiXSwidHlwZSI6ImNsaWVudCJ9XX0.JCCwwbbrEkiKyEDWHofaHfonl86NQXhjOITKhbwVBWqDo36unTzOSu4ktR86hA9P6n7t9qlF2suYNCdGFqFC5w";
-var options = "";
+require('dotenv').config();
 
 var db_path = 'mongodb://localhost:27017/mydatabase';
 
-const cr = new RoyaleAPI(token, options);
+const cr = new RoyaleAPI(process.env.CLASH_ROYALE_API_TOKEN, "");
 
 const app = express();
 app.use(express.json());
@@ -334,7 +333,7 @@ function get_num_members(members) {
     return count;
 }
 
-
+// gets the name of a player given an id
 async function get_name(id) {
     try {
         const player = await cr.getPlayer('#' + id);
@@ -345,6 +344,7 @@ async function get_name(id) {
     }
 }
 
+// gets the result of a battle, either "win", "lose", or "tie"
 function get_result(battle) {
     let my_crowns = battle.team[0].crowns;
     let opp_crowns = battle.opponent[0].crowns;
