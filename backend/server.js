@@ -217,6 +217,7 @@ app.get('/player/:id/scores', async (req, res) => {
                     wins: 0,
                     losses: 0,
                     ties: 0,
+                    remove_option: false
                 };
                 scores_map.set(enemy, score);
             }
@@ -238,8 +239,11 @@ app.get('/player/:id/scores', async (req, res) => {
                 }
             }
             scores_map.forEach((value, key) => {
-                if ((value.wins + value.losses + value.ties) == 0) {
+                if ((value.wins + value.losses + value.ties) == 0 && !player.opps.includes(key)) {
                     scores_map.delete(key);
+                }
+                else if (player.opps.includes(key)) {
+                    value.remove_option = true;
                 }
             });
 
