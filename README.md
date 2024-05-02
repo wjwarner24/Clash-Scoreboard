@@ -1,6 +1,7 @@
 # Clash Royale Scoreboard
 
-Welcome to the **Clash Royale Scoreboard**! This application is designed to help you keep track of your scores in Clash Royale games against your friends and clan members. Whether you're competing in friendly matches or serious clan battles, this tool will automatically record and manage your scores, providing you with up-to-date statistics and performance insights.
+Welcome to the **Clash Royale Scoreboard**! 
+This application is designed to help you keep track of your scores in Clash Royale games against your friends and clan members. Whether you're competing in friendly matches or serious clan battles, this tool will automatically record and manage your scores, providing you with up-to-date statistics and performance insights.
 
 ## Features
 
