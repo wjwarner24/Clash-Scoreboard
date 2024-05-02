@@ -21,14 +21,14 @@ all players based on their records against other players in the group.
 To get started with the Clash Royale Scoreboard, follow these simple setup instructions:
 
 1. **Clone the Repository**:
-**git clone https://github.com/wjwarner24/Clash-Scoreboard.git**
+- **git clone https://github.com/wjwarner24/Clash-Scoreboard.git**
 
 2. **Install Dependencies**:
- **npm install express**
- **npm install mongoose**
- **npm install cors**
- **npm install royale-api**
- **npm install dotenv**
+- **npm install express**
+- **npm install mongoose**
+- **npm install cors**
+- **npm install royale-api**
+- **npm install dotenv**
 
 3. **Set Up Environment Variables**:
 - **Make sure you have mongoDB installed and can create a valid mongo uri**
@@ -36,14 +36,14 @@ To get started with the Clash Royale Scoreboard, follow these simple setup instr
 
 - **Create a `.env` file in the root directory and add the following:**
 
- **MONGO_URI=your_mongodb_uri_here**
- **CLASH_ROYALE_API_KEY=your_clash_royale_api_key_here**
+- **MONGO_URI=your_mongodb_uri_here**
+- **CLASH_ROYALE_API_KEY=your_clash_royale_api_key_here**
 
 4. **Run the Application**:
 - **In one terminal:**
- **cd backend**
- **npm start**
+- **cd backend**
+- **npm start**
 
 - **In another terminal:**
- **cd frontend**
- **npm start**
+- **cd frontend**
+- **npm start**
