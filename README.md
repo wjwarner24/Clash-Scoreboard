@@ -40,7 +40,7 @@ To get started with the Clash Royale Scoreboard, follow these simple setup instr
 - **Create a `.env` file in the backend directory and add the following:**
 ```bash
     MONGO_URI="your_mongodb_uri_here"
-    CLASH_ROYALE_API_KEY="your_clash_royale_api_key_here"
+    CLASH_ROYALE_API_TOKEN="your_clash_royale_api_key_here"
 ```
 
 4. **Run the Application**:
