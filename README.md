@@ -29,6 +29,13 @@ To get started with the Clash Royale Scoreboard, follow these simple setup instr
 - **npm install cors**
 - **npm install royale-api**
 - **npm install dotenv**
+```bash
+    npm install express
+    npm install mongoose
+    npm install cors
+    npm install royale-api
+    npm install dotenv
+```
 
 3. **Set Up Environment Variables**:
 - **Make sure you have mongoDB installed and can create a valid mongo uri**
