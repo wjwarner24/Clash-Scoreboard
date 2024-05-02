@@ -21,8 +21,9 @@ all players based on their records against other players in the group.
 To get started with the Clash Royale Scoreboard, follow these simple setup instructions:
 
 1. **Clone the Repository**:
-- **git clone https://github.com/wjwarner24/Clash-Scoreboard.git**
-
+```bash
+    git clone https://github.com/wjwarner24/Clash-Scoreboard.git
+```
 2. **Install Dependencies**:
 ```bash
     npm install express
