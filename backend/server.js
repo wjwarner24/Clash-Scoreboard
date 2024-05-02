@@ -17,15 +17,13 @@ const RoyaleAPI = require("royale-api");
 const cors = require('cors');
 require('dotenv').config();
 
-var db_path = 'mongodb://localhost:27017/mydatabase';
-
 const cr = new RoyaleAPI(process.env.CLASH_ROYALE_API_TOKEN, "");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(db_path, {}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URI, {}).then(() => console.log('MongoDB connected')).catch(err => console.log(err));
 
 const port = process.env.PORT || 3000;
 

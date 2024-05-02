@@ -1,57 +1,46 @@
-Hi guys,<br>
+# Clash Royale Scoreboard
 
-I did the whole backend for the project.<br>
-It will not work when you try to run it because the API key I use for Clash Royale only works when I am on my home IP address.<br>
+Welcome to the **Clash Royale Scoreboard**! This application is designed to help you keep track of your scores in Clash Royale games against your friends and clan members. Whether you're competing in friendly matches or serious clan battles, this tool will automatically record and manage your scores, providing you with up-to-date statistics and performance insights.
 
-I tested it with Postman and all the routes seem to be working, there are probably some bugs somewhere though:<br>
+## Features
 
-POST /player/:id<br>
-  -adds a new player with the given id and adds all their battles<br>
-GET /players<br>
-  -gets all players<br>
-DELETE /players<br>
-  -deletes all players<br>
-GET /player/:id<br>
-  -gets a player<br>
-GET /player/:id/clanmates<br>
-  -gets the player tags of all the clanmates of a player, only used for testing<br>
-PUT /player/:id<br>
-  -updates the battles for a player<br>
-PUT /player/:id/add-opp/:tag<br>
-  -adds the specified opponent to the player's list<br>
-PUT /player/:id/remove-opp/:tag<br>
-  -removes the specified opponent from the player's list<br>
-DELETE /player/:id<br>
-  -deletes a given player<br>
-GET /player/:id/scores<br>
-  -gets the scores for a player against all clanmates and saved opponents<br>
+- **Automatic Score Tracking**: Enter your player tag, and the application will automatically track your battles, logging each game's outcome against your friends or clan members.
+- **Player Tag Management**: You can add any Clash Royale player tags to monitor and compare scores across different players in the game.
+- **Persistent Battle Logs**: All battle data retrieved from the Clash Royale API is stored in a MongoDB database, ensuring that your game history is preserved and easily accessible.
+- **Future Battle Monitoring**: Once your player tag is entered, the application continues to track and update your battle logs, so your scores are always current.
 
-I just need yall to help implement the frontend.<br>
+## Upcoming Features
 
-When the user opens the page, there should be a field to enter their player tag<br>
-Once they enter it, the page will display their scores,<br>
-then the user can manually add more people to compare their scores against<br>
+- **Automated Updates**: We are currently developing a script that will automatically update player battle logs without the need for manual refresh.
+- **Friend Group Leaderboards**: We are currently developing functionality to display a leaderboard for you and your friends that ranks
+all players based on their records against other players in the group.
 
-Or the user can change the initial player tag to someone else and see other peoples scores against others<br>
+## Getting Started
 
+To get started with the Clash Royale Scoreboard, follow these simple setup instructions:
 
-Here are some example player tags of my friends and I:<br>
+1. **Clone the Repository**:
+git clone https://github.com/wjwarner24/Clash-Scoreboard.git
 
-Me: 2LJ9R9LQ<br>
-Eli: 9RGGQQGO<br>
-Liam: 2JUYQUCPO<br>
-Noah: 802UCY2QQ<br>
+2. **Install Dependencies**:
+npm install express
+npm install mongoose
+npm install cors
+npm install royale-api
+npm install dotenv
 
-We have played eachother a decent amount.<br>
+3. **Set Up Environment Variables**:
+Make sure you have mongoDB installed and can create a valid mongo uri
+Visit https://developer.clashroyale.com/#/ and create an api key
+Create a `.env` file in the root directory and add the following:
+MONGO_URI=your_mongodb_uri_here
+CLASH_ROYALE_API_KEY=your_clash_royale_api_key_here
 
-I want to add a script that updates the battles for every player every so often so no battles go unseen.<br>
-This is because Clash Royale only displays so many battles in the battle log, so we need to save them before they dissapear.<br>
+4. **Run the Application**:
+In one terminal:
+cd backend
+npm start
 
-
-I have not touched the frontend at all, and I put it an ungodly amount of hours into this on 4/25/2024, so I would really appreciate yall<br>
-doing the majority of the frontend. <br>
-
-Thanks,<br>
--William<br>
-
-
+In another terminal:
+cd frontend
+npm start
