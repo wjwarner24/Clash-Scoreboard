@@ -15,6 +15,7 @@ This application is designed to help you keep track of your scores in Clash Roya
 - **Automated Updates**: We are currently developing a script that will automatically update player battle logs without the need for manual refresh.
 - **Friend Group Leaderboards**: We are currently developing functionality to display a leaderboard for you and your friends that ranks
 all players based on their records against other players in the group.
+- **More in-depth battle statistics**: We are currently developing functionality to display more in-depth battle statistics. The database already stores a lot of data on each battle, including: cards used, damage done, towers taken, elixir leaked, and battle time. Integrating as many useful statistics as possible into the application as possible while maintaining simplicity is key, as there are already many other web applications to track stats in Clash Royale.
 
 ## Getting Started
 
