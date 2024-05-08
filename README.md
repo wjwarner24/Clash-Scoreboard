@@ -32,6 +32,7 @@ To get started with the Clash Royale Scoreboard, follow these simple setup instr
     npm install cors
     npm install royale-api
     npm install dotenv
+	npm install axios
 ```
 
 3. **Set Up Environment Variables**:
@@ -55,4 +56,16 @@ To get started with the Clash Royale Scoreboard, follow these simple setup instr
 ```bash
     cd frontend
     npm start
+```
+
+5. **Player Codes**:
+- **Here are some examples of player codes you can use to get started with the app:**
+```
+	2LJ9R9LQ
+	9RGGQQG0
+	2JUYQUCP0
+	802UCY2QQ
+	Q98CV9UC
+	29J0V9098
+	Y80UJLCYV
 ```
