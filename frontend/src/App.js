@@ -1,4 +1,4 @@
-
+import './App.css';
 import axios from 'axios';
 const React = require('react');
 const { useState } = React;
@@ -58,52 +58,54 @@ function App() {
     }
   }
 
-  return (
-    <div>
-      <h1>Clash Royale Scoreboard</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={id}
-          onChange={handleIdChange}
-          placeholder="Enter Player ID"
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Loading...' : 'Get Scores'}
-        </button>
-      </form>
+return (
+  <div>
+    <h1>Clash Royale Scoreboard</h1>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={id}
+        onChange={handleIdChange}
+        placeholder="Enter Player ID"
+        required
+      />
+      <button type="submit" disabled={loading}>
+        {loading ? 'Loading...' : 'Get Scores'}
+      </button>
+    </form>
+    {name && (
       <section>
+        <div className="player-name">{name}</div>  {/* Ensuring the name is inside a section */}
+      </section>
+    )}
+    <section>
+      {scores.length > 0 ? (
+        <>
+          <ul>
+            {scores.map((score) => (
+              <li key={score.id}>
+                {score.name}: Wins - {score.wins}, Losses - {score.losses}, Ties - {score.ties}
+                {score.remove_option && (
+                  <button onClick={() => removeOpp(id, score.id)}>Remove</button>
+                )}
+              </li>
+            ))}
+          </ul>
+          <form onSubmit={(e) => {
+            addOpp(id, e.target.elements.oppInput.value, e);
+            e.target.reset();
+          }}>
+            <input type="text" name="oppInput" required />
+            <button type="submit">Add Opponent</button>
+          </form>
+        </>
+      ) : (
+        <p>No scores to display</p>
+      )}
+    </section>
+  </div>
+);
 
-      </section>
-      <p>{name}</p>
-      <section>
-        {scores.length > 0 ? (
-          <>
-            <ul>
-              {scores.map((score) => (
-                <li key={score.id}>
-                  {score.name}: Wins - {score.wins}, Losses - {score.losses}, Ties - {score.ties}
-                  {score.remove_option && (
-                    <button onClick={() => removeOpp(id, score.id)}>Remove</button>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <form onSubmit={(e) => {
-              addOpp(id, e.target.elements.oppInput.value, e);
-              e.target.reset();
-            }}>
-              <input type="text" name="oppInput" required />
-              <button type="submit">Add Opponent</button>
-            </form>
-          </>
-        ) : (
-          <p>No scores to display</p>
-        )}
-      </section>
-    </div>
-  );
 }
 
 export default App;
