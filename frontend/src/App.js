@@ -99,7 +99,13 @@ function App() {
             </form>
           </>
         ) : (
-          <p>No scores to display</p>
+          <form onSubmit={(e) => {
+              addOpp(id, e.target.elements.oppInput.value, e);
+              e.target.reset();
+            }}>
+              <input type="text" name="oppInput" required />
+              <button type="submit">Add Opponent</button>
+            </form>
         )}
       </section>
     </div>
